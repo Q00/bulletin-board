@@ -1,0 +1,51 @@
+
+
+spring:
+  security:
+    jwt:
+      secret: test-example12341234123dddddddddddddddddddddddddddd
+    cors:
+      allowed-origins:
+        - "*"
+      allowed-headers:
+        - Authorization
+      allowed-methods:
+        - GET
+        - POST
+        - OPTIONS
+      allow-credentials: true
+    filter:
+      dispatcher-types: request
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: test
+    password:  1234
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+    properties:
+      format_sql: true
+      hibernate:
+        show-sql: true
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  mustache:
+    suffix: .html
+
+logging:
+  level:
+    org.hibernate.SQL: trace
+    org.hibernate.type: trace
+  file:
+    name: ./logs/spring-jpa.log
