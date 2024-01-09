@@ -1,14 +1,22 @@
-FROM nginx
-RUN apt-get update
-RUN apt-get install npm -y
+# Base image
+FROM node:18.18.0
 
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-WORKDIR /usr/share/nginx/html
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY ./package*.json ./
+# Install app dependencies
+# A wildcard is used to ensure both package.json and package-lock.json are copied
+COPY package*.json ./
 RUN npm install
-COPY ./ ./
 
+# Bundle app source
+COPY . .
+
+# Build the application
 RUN npm run build
+
+# Your app binds to port 3000 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+
+# Define the command to run your app using CMD which defines your runtime
+CMD [ "npm", "start" ]

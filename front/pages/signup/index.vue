@@ -45,7 +45,7 @@ export default {
   methods: {
     async onSignup() {
       try {
-        const data = await this.$axios.$post('/signup', this.signupData)
+        const data = await this.$axios.$post('/api/signup', this.signupData)
         console.log(data)
 
         if (data.header.result) {

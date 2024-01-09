@@ -1,20 +1,17 @@
-FROM --platform=linux/amd64 gradle:8.3.0-jdk17-alpine as build-image
+FROM amazoncorretto:17.0.7-alpine
 
-ENV APP_HOME=/task
-WORKDIR $APP_HOME
+# Add app user
+ARG APPLICATION_USER=appuser
+RUN adduser --no-create-home -u 1000 -D $APPLICATION_USER
 
-COPY --chown=gradle:gradle build.gradle settings.gradle $APP_HOME/
-COPY --chown=gradle:gradle src $APP_HOME/src
+# Configure working directory
+RUN mkdir /app && \
+    chown -R $APPLICATION_USER /app
 
+USER 1000
 
-RUN gradle --no-daemon build -x test
+COPY --chown=1000:1000 ./build/libs/sample-0.0.1-SNAPSHOT.jar /app/app.jar
+WORKDIR /app
 
-RUN ls -1 $APP_HOME/build/libs
-########
-FROM --platform=linux/amd64 openjdk:17-alpine as runner
-
-ENV APP_HOME=/task
-
-COPY --from=build-image $APP_HOME/build/libs/*.jar app.jar
-
-ENTRYPOINT java -jar app.jar
+EXPOSE 8080
+ENTRYPOINT [ "java", "-jar", "/app/app.jar" ]

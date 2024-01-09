@@ -17,7 +17,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: api
     ports:
       - "8080:8080"
@@ -27,10 +27,20 @@ services:
   frontend:
     build:
       context: ./front
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: front
     ports:
-      - "4000:4000"
       - "3000:3000"
+    # No need to expose Nuxt.js port since Nginx will handle the traffic
     depends_on:
       - api
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80" # Expose HTTP
+    volumes:
+      - ./front/nginx/default.conf:/etc/nginx/conf.d/default.conf # Nginx configuration file
+    depends_on:
+      - frontend

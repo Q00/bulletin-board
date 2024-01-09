@@ -50,14 +50,14 @@ export default {
     async onLogin() {
       try {
         const { header, body } = await this.$axios.$post(
-          '/login',
+          '/api/login',
           this.loginData
         )
 
         const token = `Bearer ${body.accessToken}`
 
         const data = await this.$axios.$get(
-          '/user', {headers: {'Authorization': token}}
+          '/api/user', {headers: {'Authorization': token}}
         )
         if (header.result) {
           alert('로그인 성공')
