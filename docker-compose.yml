@@ -28,9 +28,9 @@ services:
     build:
       context: ./front
       dockerfile: dockerfile
-    container_name: font
-    restart: unless-stopped
+    container_name: front
     ports:
       - "4000:4000"
+      - "3000:3000"
     depends_on:
       - api
