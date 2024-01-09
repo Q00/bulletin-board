@@ -2,14 +2,14 @@ const { Router } = require('express');
 const axios = require('axios');
 const router = Router();
 
-const SPRING_BOOT_AUTH_API_URL = 'http://localhost:8080/api/user'; // Update with your Spring Boot server URL
+const SPRING_BOOT_AUTH_API_URL = 'http://api:8080/api/user'; // Update with your Spring Boot server URL
 
 router.post('/signup', async function (request, response) {
   axios.post(`${SPRING_BOOT_AUTH_API_URL}`, request.body)
   .then((res) => {
     response.status(201).json(res.data);
   })
-  .catch((error) => { 
+  .catch((error) => {
     console.log(error)
     response.status(error.response.status).send('Server error');
   })

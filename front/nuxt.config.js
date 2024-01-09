@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'be-bul',
+    title: 'bullentin-board',
     htmlAttrs: {
       lang: 'en',
     },

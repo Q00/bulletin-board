@@ -1,7 +1,7 @@
 // boardService.js
 const axios = require('axios');
 
-const SPRING_BOOT_API_URL = 'http://localhost:8080/api/board'; // Update with your Spring Boot server URL
+const SPRING_BOOT_API_URL = 'http://api:8080/api/board'; // Update with your Spring Boot server URL
 
 class BoardService {
   async list({ page, size }, token) {
